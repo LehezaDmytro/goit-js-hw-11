@@ -26,7 +26,10 @@ async function clickSerch(e) {
         new SimpleLightbox('.image-link', { captionDelay: 250 });
         btnLoadMore.style.display = "block";
         pageNumber = 2;
-        scrollTo(0, 0);
+        scrollTo({
+          top: 0,
+          behavior: "smooth",
+        });
       }
     } catch (error) {
     console.error(error);
@@ -43,22 +46,21 @@ function markupGallery(arrey) {
   <div class="info">
         <div class="info-item">
           <p><b>Likes</b></p>
-          <p>${object.likes}</p>
+          <p class="value">${object.likes}</p>
         </div>
         <div class="info-item">
           <p><b>Views</b></p>
-          <p>${object.views}</p>
+          <p class="value">${object.views}</p>
         </div>
         <div class="info-item">
           <p><b>Comments</b></p>
-          <p>${object.comments}</p>
+          <p class="value">${object.comments}</p>
         </div>
         <div class="info-item">
           <p><b>Downloads</b></p>
-          <p>${object.downloads}</p>
+          <p class="value">${object.downloads}</p>
         </div>
-      </div>
-    </div>
+       </div> 
 </div>`).join('')
 }
 
