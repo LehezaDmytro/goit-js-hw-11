@@ -8,6 +8,8 @@ const form = document.querySelector('.search-form')
 const gallery = document.querySelector('.gallery')
 const btnLoadMore = document.querySelector('.load-more')
 
+const clickOnThePicture = new SimpleLightbox('.gallery .image-link', { captionDelay: 250 });
+
 let pageNumber = null;
 form.addEventListener('submit', clickSerch)
 
@@ -23,7 +25,7 @@ async function clickSerch(e) {
       } else {
         Notify.success(`Hooray! We found ${response.data.totalHits} images.`)
         gallery.innerHTML = markupGallery(response.data.hits);
-        new SimpleLightbox('.image-link', { captionDelay: 250 });
+        clickOnThePicture.refresh();
         btnLoadMore.style.display = "block";
         pageNumber = 2;
         scrollTo({
@@ -35,6 +37,7 @@ async function clickSerch(e) {
     console.error(error);
   }
 }
+
 
 function markupGallery(arrey) {
   return arrey.map(object => `<div class="photo-card">
@@ -73,7 +76,7 @@ async function clickLoadMore() {
       const searchQuery = input.value.split(' ').join('+');
       const response = await axios.get(`https://pixabay.com/api/?key=33070730-25f95ed9e03123c99fcb559cb&q=${searchQuery}&image_type=photo&orientation=horizontal&safesearch=true&per_page=40&page=${pageNumber}`);
       gallery.insertAdjacentHTML('beforeend', markupGallery(response.data.hits));
-      new SimpleLightbox('.image-link', { captionDelay: 250 });
+      clickOnThePicture.refresh();
       pageNumber += 1;
     } catch (error) {
       Notify.failure("We're sorry, but you've reached the end of search results.")
